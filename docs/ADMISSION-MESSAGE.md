@@ -8,14 +8,14 @@ Please enable 1-click deploy for Posta.
 
 Builder uid: 819e6514-a7f5-4437-820f-62a3238d7c1d
 Agent slug: posta
-Image: ghcr.io/puebloaguilar/posta@sha256:4e93403e36a5db1bca1d6d3e6e904e917b49ebddb6e2262e49f1f1892c459be0
+Image: ghcr.io/puebloaguilar/posta@sha256:9f847ecc27dd314965b39e0b6b4d3a852ca0b88672cdbc3caecf66f8073fdf09
 Source: https://github.com/PuebloAguilar/posta
-Image source commit: be17377f2f0145e173c6c165b9e33ddf6735abe7
+Image source commit: eeae052655e2bd1375cc31287bf19cb0089d89af
 Listing: https://aiworthusing.com/agent-index/posta
 
 Posta is a Hermes persona and skill built on the official Plow base. It previews social content over iMessage and uses each user's Postiz account to schedule approved posts.
 
-The public image supports linux/amd64 and was pulled anonymously by this exact digest. Local iMessage discovery and a content preview passed against my connected Postiz account. The installed CLI's upload/scheduling payloads passed fixture checks; no social post was created during validation. The image contains no user credentials. Postiz authentication is per installation.
+The v2 public image supports linux/amd64 and was pulled anonymously by this exact digest. Each installation starts disconnected from Postiz and guides its owner through their own account, browser device authorization, social-channel connection and destination confirmation. Real device login in the background delivered its URL/code over iMessage; this test was cancelled before approval. The installed CLI passed two isolated fixture-account logins and the upload/scheduling payload checks. No social post was created during validation. The image contains no user credentials, and default Compose does not inherit the operator's Postiz key.
 ```
 
 Se precisar conferir os comandos de admissão, a equipe pode usar a

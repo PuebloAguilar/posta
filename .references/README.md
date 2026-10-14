@@ -9,6 +9,7 @@ importa estas pastas. Atualize esta tabela quando mover um pin.
 | [plow-hermes-agent](https://github.com/plow-pbc/plow-hermes-agent) | Contrato de persona/skills, boot e Agent Index embutido | Apache-2.0 | `c692e807386993b677de13500ce3a1a323d52b48` |
 | [plow-agents](https://github.com/plow-pbc/plow-agents) | CLI de login, linha, Compose e publicação/admissão | Apache-2.0 | `53dd92242e88f6e877cc09dbfb08b31b0e3925cb` |
 | [postiz-agent](https://github.com/gitroomhq/postiz-agent) | Cliente mantido de contas, upload, criação, auth e status | AGPL-3.0 | `de2032e46d329c4e01714a65a57da28cd419a5b2` |
+| [postiz-app](https://github.com/gitroomhq/postiz-app) | Contrato de organização/OAuth, permissões API, planos e conexão de canais | AGPL-3.0 | `25916f12743ea7cc27ebe025f361448f9acfc258` |
 
 Consultados em 2026-10-14. Todos estavam ativos, com pushes recentes em setembro/
 outubro; atividade não equivale a garantia de estabilidade. Postiz exige Node
@@ -31,6 +32,12 @@ O usuário rejeitou ledger/executor próprio. Portanto não se justifica impleme
 um backend, scheduler ou camada de estado neste projeto. Postiz fornece o relógio
 de publicação e Hermes conserva as conversas. Aprovação por instrução de modelo
 não oferece a garantia de um bloqueio determinista.
+
+Para onboarding, o CLI 2.0.16 existente e o dashboard individual foram mantidos:
+o pacote publicado não oferece comandos de conexão social. O servidor Postiz é
+consultado somente para confirmar o contrato e não é instalado nesta imagem.
+Isso evita um auth server ou cliente paralelo. Ver limites e compatibilidade em
+[`docs/ONBOARDING-RESEARCH.md`](../docs/ONBOARDING-RESEARCH.md).
 
 ## Imagem base
 

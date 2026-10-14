@@ -122,3 +122,12 @@ As regras de aprovação são orientações de persona/skill, sem gate determini
 registro próprio, conforme o escopo escolhido. Não declarar garantia absoluta de
 deduplicação, cumprimento pelo modelo ou isolamento de contas sem a prova runtime
 que a situação exige.
+
+## Onboarding individual v2
+
+O default agora está desconectado e ignora credenciais Postiz do ambiente do
+operador. A v2 pública inclui o fluxo completo por instalação. Ver
+[VERIFICATION-ONBOARDING.md](VERIFICATION-ONBOARDING.md) para testes de contas
+separadas, primeiro uso, login pendente real e seus limites. A conexão pessoal
+self-hosted descrita nesta verificação foi somente o teste v1; foi removida do
+runtime padrão do Posta.

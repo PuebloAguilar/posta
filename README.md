@@ -39,6 +39,11 @@ O dono deve enviar pelo próprio telefone a frase de ativação ao número que o
 mostrar. Escolha uma linha disponível; `ln_p1` no exemplo do Plow não garante uma
 linha livre na sua conta.
 
+Mantenha um diretório/credencial e home exclusivos por instalador/linha. Se operar
+várias instalações no mesmo host, use `COMPOSE_PROJECT_NAME` distinto e o fluxo
+`mint --credential-file` abaixo com arquivo privado distinto para cada uma.
+Não reutilize o volume de outra pessoa ao trocar o dono ou a linha.
+
 O padrão começa desconectado do Postiz. Você pode copiar `.env.example` para
 `.env` privado e definir seu fuso, mas não precisa fornecer uma chave para o
 onboarding cloud. Chaves `POSTIZ_API_KEY`/URLs exportadas no terminal do operador
@@ -148,7 +153,7 @@ imagem e solicitar deploy de um clique à equipe Plow. Nome/slug públicos devem
 ser escolhidos antes do registro. A base já envia uso ao Index quando `AGENT_ID`
 está configurado; não precisa instalar outro reporter.
 
-Release v1: [Posta no Agent Index](https://aiworthusing.com/agent-index/posta) e
+Release v2 com onboarding individual: [Posta no Agent Index](https://aiworthusing.com/agent-index/posta) e
 [imagem pública no GHCR](https://github.com/users/PuebloAguilar/packages/container/package/posta).
 Imagem `linux/amd64`, com pull anônimo verificado. A primeira admissão para deploy
 de um clique ainda depende da equipe Plow; os dados e a mensagem estão em

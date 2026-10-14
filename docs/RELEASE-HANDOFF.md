@@ -8,12 +8,13 @@ Atualizado em 2026-10-14. Nome/slug escolhidos pelo usuário: **Posta / posta**.
 | Fonte pública | https://github.com/PuebloAguilar/posta, main |
 | Linha Plow | `ln_p3`, +1 650 315 6536 |
 | Execução | Docker Compose local, container próprio ativo |
-| Postiz | Instância self-hosted do dono autenticada; Instagram standalone ativo |
+| Postiz | Default desconectado; chave pessoal removida do runtime; cada pessoa conecta a própria conta |
 | Modelo atual | `z-ai/glm-5.2` via Plow, inferência funcionando após recarga; tentativa Codex encerrada |
-| Preview/aprovação | Prévia de legenda recebida no iMessage; discovery real e zero comandos de escrita social |
+| Onboarding | Cadastro próprio, login em background, URL/código reais recebidos no iMessage; teste cancelado sem autorização |
+| Preview/aprovação | Prévia v1 validada; v2 mantém aprovação e acrescenta onboarding individual |
 | UID do builder | `819e6514-a7f5-4437-820f-62a3238d7c1d` |
 | Slug do Agent Index | `posta`, listing registrado; consulta pública confirmou Posta e blurb corretos |
-| Release v1 | `ghcr.io/puebloaguilar/posta:v1`, linux/amd64 |
+| Release v2 | `ghcr.io/puebloaguilar/posta:v2`, linux/amd64 |
 | Imagem local | arm64 e amd64 construídas; CLI amd64 passou nove checks |
 | Registry público | GitHub visibility public; pull anônimo pelo digest PASS |
 | Agent Index | Registrado pelo reporter nativo; https://aiworthusing.com/agent-index/posta |
@@ -22,13 +23,17 @@ Atualizado em 2026-10-14. Nome/slug escolhidos pelo usuário: **Posta / posta**.
 Referência publicada e verificada:
 
 ```text
-ghcr.io/puebloaguilar/posta@sha256:4e93403e36a5db1bca1d6d3e6e904e917b49ebddb6e2262e49f1f1892c459be0
+ghcr.io/puebloaguilar/posta@sha256:9f847ecc27dd314965b39e0b6b4d3a852ca0b88672cdbc3caecf66f8073fdf09
 ```
 
 Fonte dos arquivos incluídos nessa imagem: commit
-`be17377f2f0145e173c6c165b9e33ddf6735abe7`. Os commits posteriores documentam a
+`eeae052655e2bd1375cc31287bf19cb0089d89af`. Os commits posteriores documentam a
 publicação. O pacote GHCR contém somente amd64; arm64 foi verificado localmente e
 não integra esse manifest público. Cada instalador precisa conectar seu Postiz.
+
+Dois usuários fictícios, com homes e autorizações distintas, passaram no teste
+do CLI real. Signup/OAuth social completos de outra pessoa e primeiro deploy cloud
+ainda exigem a ação dessa pessoa/equipe; não foram simulados como sucesso real.
 
 Não há código/token de ativação, chave Postiz ou credencial de modelo neste arquivo.
 Os dados públicos de identidade acima servem à coordenação da publicação. A

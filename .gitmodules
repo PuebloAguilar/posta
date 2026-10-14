@@ -7,3 +7,6 @@
 [submodule ".references/postiz-agent"]
 	path = .references/postiz-agent
 	url = https://github.com/gitroomhq/postiz-agent.git
+[submodule ".references/postiz-app"]
+	path = .references/postiz-app
+	url = https://github.com/gitroomhq/postiz-app.git
