@@ -43,3 +43,20 @@
 - [x] Fazer discovery read-only do Postiz real com saída sanitizada, sem copiar segredo para artefatos.
 - [x] Revisar diff e arquivos de build por referência/segredos; revisão independente; registrar limites em `docs/VERIFICATION.md` e Kata.
 - [x] Commit local da entrega verificada; não presumir login Plow, publicação do Index, imagem pública ou teste iMessage.
+
+## Task 5: Onboarding completo com contas individuais
+
+- [x] Pesquisar auth/social connection na versão npm instalada e executar baseline
+  dos cinco estados antes da alteração da skill.
+- [ ] Adicionar prova de Compose contra uma chave fictícia herdada do ambiente;
+  observar a falha e remover essa herança do default. Self-hosted usa override
+  explícito com variáveis POSTA próprias; atualizar `.env.example` e README.
+- [ ] Adicionar `references/onboarding.md` com primeiro uso, login em background,
+  conexão social pelo dashboard, confirmação de destinos, troca/logout e erros.
+  Atualizar os triggers da skill e a persona para usar essa referência.
+- [ ] Exercitar device login e descoberta do CLI real com duas homes/contas
+  fictícias, pendência, persistência, logout e autenticação recusada.
+- [ ] Repetir cenários com a nova skill e revisar os riscos de contas/credenciais.
+- [ ] Recriar somente o runtime Posta sem a chave pessoal; validar primeiro
+  contato real sem concluir autorização de conta alheia ou publicar conteúdo.
+- [ ] Publicar imagem v2, provar pull anônimo e atualizar o handoff de admissão.

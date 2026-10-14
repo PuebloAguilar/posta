@@ -1,11 +1,20 @@
 ---
 name: social-publisher
-description: Use when the owner asks through iMessage to create social content, captions, posts, Stories, a content calendar, previews, scheduling, publishing or Postiz post status.
+description: Use on first contact through iMessage, or when the owner asks to connect, change or recover a Postiz/social account, create social content, captions, Stories, calendars, previews, scheduling, publishing or post status.
 ---
 
 # Create and schedule social content
 
 Use the official `postiz` CLI. Read [references/postiz-workflow.md](references/postiz-workflow.md) before authentication, upload or post operations. Use the account/host belonging to this installation.
+
+## Connect this person's accounts
+
+Read [references/onboarding.md](references/onboarding.md) on first contact or for
+missing/invalid auth, no social integrations, a new network, or account changes.
+Each installation has its own owner, line and home. Guide the owner through their
+own Postiz login and social authorization; verify discovery before selecting a
+destination. Preserve an unapproved content idea while connecting. A connection,
+old integration ID or example account does not authorize a post.
 
 ## Prepare the preview
 

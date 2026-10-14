@@ -45,8 +45,8 @@ Escolha sua organização/conta GHCR e uma tag de release:
 
 ```sh
 docker login ghcr.io -u SEU_USUARIO
-plow-agents image build ghcr.io/puebloaguilar/posta:v1
-plow-agents image push ghcr.io/puebloaguilar/posta:v1
+plow-agents image build ghcr.io/puebloaguilar/posta:v2
+plow-agents image push ghcr.io/puebloaguilar/posta:v2
 plow-agents profile --show
 ```
 
@@ -54,7 +54,7 @@ O comando `image build` do CLI consultado constrói **linux/amd64**, compatível
 o deploy cloud. `image push` só envia a tag já construída; não faz build e não deve
 enviar uma tag antiga por engano. O CLI não produz uma imagem multiarch automaticamente. Para distribuir nas duas
 arquiteturas, use um builder apropriado e `docker buildx build --platform
-linux/amd64,linux/arm64 --push -t ghcr.io/puebloaguilar/posta:v1 .`; faça isso
+linux/amd64,linux/arm64 --push -t ghcr.io/puebloaguilar/posta:v2 .`; faça isso
 apenas em uma máquina com capacidade suficiente.
 
 Depois do primeiro push, marque o pacote GHCR como público em Package settings →
@@ -73,9 +73,10 @@ admitir a primeira imagem e atribuir o owner. Preparar essas informações não 
 uma mensagem nem significa que a admissão ocorreu.
 
 Cada instalador recebe sua própria identidade Plow e volume. O Postiz de cada um
-deve passar pelo onboarding individual. O device flow cloud é a conexão existente
-mais direta; self-hosted requer auth server da instância ou provisionamento seguro
-de chave fora do chat. O CLI Plow público não oferece `deploy --env`/secrets para
+deve passar pelo onboarding individual. O device flow cloud é guiado pelo iMessage e cada
+pessoa conecta os canais no próprio dashboard; veja [ONBOARDING.md](ONBOARDING.md).
+Self-hosted requer auth server da instância ou o override individual explícito
+`compose.self-hosted.yml`, com a chave provisionada fora do chat. O CLI Plow público não oferece `deploy --env`/secrets para
 copiar a chave Postiz do criador para os instaladores.
 
 ## 5. Releases seguintes
@@ -83,8 +84,8 @@ copiar a chave Postiz do criador para os instaladores.
 Depois da admissão administrativa:
 
 ```sh
-plow-agents image build ghcr.io/puebloaguilar/posta:v2
-plow-agents image push ghcr.io/puebloaguilar/posta:v2 --promote posta
+plow-agents image build ghcr.io/puebloaguilar/posta:v3
+plow-agents image push ghcr.io/puebloaguilar/posta:v3 --promote posta
 plow-agents image show posta
 ```
 

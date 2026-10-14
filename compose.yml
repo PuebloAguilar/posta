@@ -4,12 +4,11 @@ services:
     image: plow-postiz-hermes-agent:local
     env_file: ${PLOW_CREDENTIALS:-./plow-credentials}
     environment:
-      POSTIZ_API_URL: ${POSTIZ_API_URL:-}
-      POSTIZ_API_KEY: ${POSTIZ_API_KEY:-}
-      POSTIZ_AUTH_SERVER: ${POSTIZ_AUTH_SERVER:-https://cli-auth.postiz.com}
+      POSTIZ_AUTH_SERVER: ${POSTA_POSTIZ_AUTH_SERVER:-https://cli-auth.postiz.com}
+      POSTA_POSTIZ_DASHBOARD_URL: ${POSTA_POSTIZ_DASHBOARD_URL:-https://platform.postiz.com}
       HERMES_PROVIDER: ${HERMES_PROVIDER:-plow}
       HERMES_MODEL: ${HERMES_MODEL:-}
-      TZ: ${AGENT_TIMEZONE:-America/Sao_Paulo}
+      TZ: ${AGENT_TIMEZONE:-UTC}
     volumes:
       - agent-home:/var/lib/hermes
     stop_grace_period: 35s

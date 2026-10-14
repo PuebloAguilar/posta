@@ -64,3 +64,25 @@ Escopo: persona, skill, imagem e instruções para iMessage/Postiz.
 Decisões: prévia antes de agendar; reutilizar runtime Plow e CLI Postiz; sem executor/ledger próprio.
 Riscos: instruções de aprovação são orientações ao modelo; não há gate determinista adicional nesta versão simplificada.
 Pendências: nome/slug público, login/linha Plow, provedor de imagens por instalação, validação do OAuth self-hosted na nuvem e admissão administrativa do deploy de um clique.
+
+## Onboarding individual — requisito reforçado pelo usuário
+
+Cada pessoa recebe uma instalação Plow/Hermes, linha e home próprias. O número do
+teste do criador não é uma caixa de entrada pública para todas as pessoas. O
+Compose padrão começa sem chave Postiz, inclusive se o terminal do operador tiver
+`POSTIZ_API_KEY` exportada. A configuração self-hosted é um override explícito da
+própria pessoa, com variáveis próprias do Posta.
+
+O primeiro uso conduz: conta Postiz própria (criar/entrar no navegador se preciso)
+→ device login nativo em background → URL/código no iMessage → confirmação da
+autorização → conexão das redes no dashboard dessa conta → descoberta e escolha
+dos perfis → voz/público/fuso → prévia completa → aprovação → agendamento/estado.
+Login Postiz e redes conectadas são estados distintos. Lista vazia recebe instrução
+de Add Channel; login pendente, expirado, acesso recusado e troca de conta têm
+retomadas explícitas. CLI 2.0.16 não contém `integrations:connect`.
+
+Não criar contas, assinar planos ou autorizar redes em nome de alguém. A pessoa
+faz essas etapas no navegador; o agente verifica o resultado pelo CLI. Histórico,
+IDs conhecidos e a conta do criador não substituem a conexão da instalação atual.
+Os testes exercitam o CLI real com duas homes/contas fictícias isoladas e repetem
+o primeiro contato sem a credencial pessoal no runtime local.

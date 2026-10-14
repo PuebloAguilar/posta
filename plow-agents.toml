@@ -1,2 +1,2 @@
 # Public amd64 release. Initial Plow admission is still pending.
-image = "ghcr.io/puebloaguilar/posta:v1"
+image = "ghcr.io/puebloaguilar/posta:v2"

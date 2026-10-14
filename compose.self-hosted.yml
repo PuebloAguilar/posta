@@ -1,0 +1,8 @@
+# Optional: this person's own self-hosted key, provisioned outside chat.
+# docker compose -f compose.yml -f compose.self-hosted.yml up -d --build
+services:
+  agent:
+    environment:
+      POSTIZ_API_URL: ${POSTA_SELF_HOSTED_API_URL:?Set this installation's API root}
+      POSTIZ_API_KEY: ${POSTA_SELF_HOSTED_API_KEY:?Provision this person's own API key outside chat}
+      POSTA_POSTIZ_DASHBOARD_URL: ${POSTA_POSTIZ_DASHBOARD_URL:?Set this person's dashboard URL}

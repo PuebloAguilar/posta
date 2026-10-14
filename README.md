@@ -3,7 +3,8 @@
 Mande uma ideia, foto ou vídeo pelo iMessage. O agente prepara o conteúdo, mostra
 uma prévia e agenda nas suas redes pelo Postiz depois da sua aprovação.
 
-Cada pessoa tem sua própria instalação, contas e preferências. Esta versão contém
+Cada pessoa tem sua própria instalação Plow, linha iMessage, contas e preferências.
+O número usado no teste do criador pertence à instalação dele. Esta versão contém
 **persona e skill**; usa as sessões do Hermes e a fila do Postiz, sem banco,
 registro de execução ou scheduler próprio.
 
@@ -38,10 +39,10 @@ O dono deve enviar pelo próprio telefone a frase de ativação ao número que o
 mostrar. Escolha uma linha disponível; `ln_p1` no exemplo do Plow não garante uma
 linha livre na sua conta.
 
-Configure `POSTIZ_API_URL`, `POSTIZ_API_KEY` e `AGENT_TIMEZONE` no ambiente ou em uma
-cópia privada de `.env.example` chamada `.env`. Use o endereço da sua instância:
-o CLI acrescenta `/public/v1`, então um host self-hosted exposto sob `/api` precisa
-desse prefixo na URL. Não use credenciais cloud para uma organização self-hosted.
+O padrão começa desconectado do Postiz. Você pode copiar `.env.example` para
+`.env` privado e definir seu fuso, mas não precisa fornecer uma chave para o
+onboarding cloud. Chaves `POSTIZ_API_KEY`/URLs exportadas no terminal do operador
+não são passadas automaticamente ao agente.
 
 ```sh
 plow-agents deploy --local --line ID_DA_LINHA_LIVRE
@@ -57,15 +58,37 @@ em vez de combinar esse override com `deploy --local`.
 
 O Compose constrói a imagem, recebe o token de agente em `plow-credentials` e mantém
 as conversas/credenciais OAuth no volume `agent-home`. Mande “oi” ao número da
-linha. Se você usa uma API key no ambiente, a conexão Postiz já estará disponível.
-Se usa OAuth, peça “conectar meu Postiz”; o agente inicia o device flow e envia o
-link/código para você autorizar no navegador. OAuth para uma instância self-hosted
-precisa do auth server compatível dela; o fluxo hosted para hosts arbitrários não
-foi comprovado.
+linha e peça “conectar meu Postiz”. O agente conduz o fluxo abaixo.
 
 Não envie chaves pelo iMessage. O agente roda `auth:status` sem devolver sua saída
 bruta ao chat. Uma credencial OAuth salva tem precedência sobre ambiente: confira
 que ela pertence ao host/organização desejados antes de trocar a configuração.
+
+## Conectar suas próprias contas
+
+1. Entre ou crie sua conta em [Postiz](https://platform.postiz.com/auth). Escolha
+   sua organização e confira o acesso API/assinatura exigido pelo serviço.
+2. No iMessage do seu Posta, diga que está pronto para conectar. Ele envia o link
+   e o código reais de autorização e continua disponível enquanto você autoriza
+   no navegador. Nenhuma senha ou API key precisa ser enviada pelo chat.
+3. No Calendar do seu Postiz, escolha **Add Channel**, selecione Instagram ou a
+   rede desejada e autorize a sua própria conta. Se necessário, escolha sua
+   página/canal/perfil. Diga “conectei” no iMessage.
+4. O Posta consulta e mostra os perfis encontrados. Confirme os destinos, a voz da
+   sua marca, o público e o fuso. Depois envie uma ideia, foto ou vídeo.
+5. Revise a prévia com conta, conteúdo, mídia e horário. O agendamento ocorre
+   somente depois da aprovação dessa versão.
+
+Cada pessoa autentica seu próprio Postiz; conexão nenhuma é herdada do criador.
+Troca, expiração, reconexão e logout estão em [docs/ONBOARDING.md](docs/ONBOARDING.md).
+
+Para **self-hosted**, use o auth server compatível já existente da sua instância
+ou configure sua própria chave fora do chat: preencha as variáveis
+`POSTA_SELF_HOSTED_*` e `POSTA_POSTIZ_DASHBOARD_URL` no `.env` privado e execute
+`docker compose -f compose.yml -f compose.self-hosted.yml up -d --build` depois
+de obter a credencial/linha Plow. A CLI adiciona `/public/v1` ao API root; a sua
+URL pode precisar terminar em `/api`. O login cloud não garante conexão a uma
+instância self-hosted arbitrária.
 
 ## Usar sua conta Codex para o modelo
 

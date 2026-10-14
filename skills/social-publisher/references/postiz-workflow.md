@@ -7,18 +7,17 @@ For self-hosted reverse proxies it commonly ends in `/api`. Configure the owner'
 actual URL before calls. API keys come from the deployment environment, never the
 image, persona, skill or iMessage thread.
 
-Run `postiz auth:status` first and inspect its result locally; it can print part of
-the key, so never forward its raw output. Saved OAuth credentials override API key
+Run the sanitized status command from [onboarding.md](onboarding.md) first. Native
+`auth:status` prints a key/token prefix and can exit 0 when unauthenticated or
+invalid: inspect the result, then require successful `integrations:list`. Saved OAuth credentials override API key
 and URL environment variables. If they point at another host, report the mismatch
 and have the owner reconnect that installation; do not silently change accounts.
 
-For Postiz cloud onboarding, run `postiz auth:login` using an interactive terminal
-session. Send only the verification URL and short device code to the owner, let
-them approve in the browser, and resume/poll that same terminal until login finishes.
-Never ask for a password or API token in chat. Self-hosted OAuth requires the
-instance's supported auth server (`POSTIZ_AUTH_SERVER`); hosted OAuth routing to an
-arbitrary self-hosted instance is not established. An operator can provision a
-self-hosted API key outside chat instead. Re-run auth status after connection.
+For cloud onboarding, use the native background login and resumption described in
+[onboarding.md](onboarding.md). Self-hosted OAuth requires the instance's supported
+auth server; otherwise the owner provisions their own API key through the explicit
+deployment override outside chat. The cloud CLI auth server is not a general
+relay to arbitrary self-hosted public APIs. Re-run discovery after connection.
 
 ## Discover and prepare
 
