@@ -2,6 +2,8 @@ FROM public.ecr.aws/e1h7x4a2/plow-cloud-agents:base-c692e807386993b677de13500ce3
 
 LABEL org.opencontainers.image.title="Posta" \
       org.opencontainers.image.description="Hermes persona and skill for previewing and scheduling approved social content on Plow" \
+      org.opencontainers.image.source="https://github.com/PuebloAguilar/posta" \
+      org.opencontainers.image.revision="" \
       co.plow.postiz.version="2.0.16"
 
 COPY runtime/package.json runtime/package-lock.json /opt/postiz/

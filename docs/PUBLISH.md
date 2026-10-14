@@ -1,8 +1,9 @@
 # Publicação no Plow e Agent Index
 
-Estas etapas descrevem ações reais ainda dependentes de login, teste de conversa e
-identidade pública escolhida. O usuário escolheu **Posta**, slug **`posta`**. Não
-execute comandos usando uma URL de repo ou tag que ainda não tenha sido publicada.
+Estas etapas descrevem o fluxo de instalação e release. O usuário escolheu
+**Posta**, slug **`posta`**. A instalação local já respondeu com prévia pelo
+iMessage e registrou o listing. Consulte [RELEASE-HANDOFF.md](RELEASE-HANDOFF.md)
+para o estado da imagem pública e da admissão.
 
 ## 1. Validar a instalação
 
@@ -56,7 +57,10 @@ arquiteturas, use um builder apropriado e `docker buildx build --platform
 linux/amd64,linux/arm64 --push -t ghcr.io/puebloaguilar/posta:v1 .`; faça isso
 apenas em uma máquina com capacidade suficiente.
 
-Depois do primeiro push, marque o pacote GHCR como público. Confirme pull anônimo
+Depois do primeiro push, marque o pacote GHCR como público em Package settings →
+Change visibility → Public. GHCR cria o pacote privado mesmo quando seu repo é
+público; a mudança para Public é irreversível. Essa mudança é feita pela UI; não
+há setter público REST/GraphQL documentado confirmado. Confirme pull anônimo
 da referência `repository@sha256:...` impressa pelo push; o sucesso autenticado do
 criador não comprova acesso público. A imagem contém código/configuração genérica,
 sem `.env`, `plow-credentials`, tokens ou dados sociais.

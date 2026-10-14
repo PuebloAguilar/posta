@@ -1,0 +1,38 @@
+# Posta — publicação amd64 no GHCR e admissão Plow
+
+Pesquisa somente de fontes primárias em 2026-10-14. Lidos `AGENTS.md`, spec e `docs/PUBLISH.md` do projeto local. Nenhum token foi examinado/imprimido e não houve escrita em serviços externos, build, push ou criação de workflow/repositório. Escopo mantido: persona e skill sobre a base Plow; nome `Posta`, slug `posta`.
+
+## GHCR: publicação e visibilidade
+
+**Fato confirmado:** o primeiro package GHCR nasce privado. Repositório público, label `org.opencontainers.image.source` e push por Actions não comprovam package público: no registry com permissões granulares, ligação ao repo herda acesso **sem herdar visibility**. Depois do push, o caminho confirmado é `Package settings → Danger Zone → Change visibility → Public`, com confirmação pelo nome. É operação irreversível para tornar o mesmo package privado novamente. Fonte: [documentação específica de acesso/visibilidade](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#configuring-visibility-of-packages-for-your-personal-account).
+
+**API:** o catálogo REST Packages documenta leitura, listagem, exclusão e restauração; `visibility` na listagem é só filtro. Não documenta PATCH/PUT para mudar a visibility. O schema público atual do Octokit (`82ff2d4780080e6929ebb95608cefa22dfa05ac7`) tem apenas `deletePackageVersion` entre mutações de package, sem setter de visibility. Conclusão restrita: **não há mecanismo REST/GraphQL público documentado verificado para essa mudança**; usar a UI, não inventar endpoint. Fontes: [REST Packages](https://docs.github.com/en/rest/packages/packages), [schema primário GraphQL](https://github.com/octokit/graphql-schema/blob/82ff2d4780080e6929ebb95608cefa22dfa05ac7/schema.graphql).
+
+**Auth local:** GitHub documenta PAT classic com `write:packages` para publicar pelo Docker; fine-grained PAT não é substituto documentado para push GHCR. Login existente no `gh` não prova esse scope ou compatibilidade de seu tipo de token. O agente principal verificará scopes sem mostrar segredo. Caso a credencial atual seja adequada, o transporte deve usar stdin direto para Docker, nunca imprimir a saída de `gh auth token`. Fontes: [auth GHCR](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-with-a-personal-access-token-classic), [comando gh auth token](https://cli.github.com/manual/gh_auth_token).
+
+**Actions, alternativa suportada:** `GITHUB_TOKEN` do próprio repo pode publicar GHCR com `contents: read` e `packages: write`; não exige adicionar PAT. Uma workflow simples disparada manualmente pode construir nativamente `linux/amd64` em Ubuntu x64 e enviar a imagem. Publicação por workflow associa o package ao repo; um package antigo criado fora dele pode exigir conexão/acesso explícito. A mudança para Public continua sendo etapa separada. Fontes: [autenticação com token do workflow](https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions), [exemplo oficial Docker/GHCR](https://docs.github.com/en/actions/tutorials/publish-packages/publish-docker-images).
+
+Há uma imprecisão entre páginas oficiais: a página genérica de Actions diz que packages novos herdam visibility; a documentação específica de registry granular diz explicitamente “but not the visibility”. Para GHCR, aplicar a regra específica e provar acesso anônimo, sem supor sucesso pela visibilidade do repo.
+
+## CLI Plow: efeitos exatos
+
+Fonte local corresponde ao SHA público `53dd92242e88f6e877cc09dbfb08b31b0e3925cb`. `image build REF` verifica exclusão de credenciais e chama `docker build --platform linux/amd64 --tag REF .`. `image push REF` **não constrói**: executa Docker push da tag existente, extrai seu digest e retorna `repository@sha256:...`; com `--promote`, usa esse digest exato e imprime a linha JSON de promoção. Fonte: [build/push implementados](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/bin/plow-agents#L559).
+
+Registro no Index não admite a imagem ao catálogo Plow. Primeira admissão exige listing já existente, admin allowlisted e `--owner UID`; um builder comum não ganha essa permissão ao publicar a imagem. Depois da admissão, o owner pode promover digest novo. A imagem tem de ser pullable publicamente e Plow valida seu manifest. Promoção altera novas instalações, não a imagem dos agentes já rodando. Fontes: [admissão/promoção oficial](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/README.md#register-admit-then-promote-an-agent-image), [checagem de owner no código](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/bin/plow-agents#L625).
+
+Não executar `image push ... --promote posta` como primeira admissão: o CLI recusa criação sem owner e um não-admin não pode admiti-la. Para preparar o handoff, bastam UID público do profile, slug, referência pública por digest, repo e commit. Nenhuma mensagem no Discord foi enviada.
+
+## Postiz npm 2.0.16 e código-fonte
+
+Registry confirma `postiz@2.0.16`, licença **AGPL-3.0**, tarball com integrity SHA-512 e repositório `gitroomhq/postiz-agent`. O metadata não fornece `gitHead`. Existe tag oficial `v2.0.16 → 0a5cd5aedaf8edd030895e23642ee51db84c7a66`; seu package.json também diz 2.0.16/AGPL-3.0. O commit anterior `885e1b04260a2746a3fe92d75e241101111a7a71`, de 2026-08-11, já tinha essa versão; publicação npm foi no mesmo dia, enquanto a tag atual foi feita depois. Portanto a tag identifica fonte declarada da versão, mas **não foi provada identidade byte a byte do build npm com essa tag**. Fontes: [metadata distribuído](https://registry.npmjs.org/postiz/2.0.16), [fonte tag imutável](https://github.com/gitroomhq/postiz-agent/tree/0a5cd5aedaf8edd030895e23642ee51db84c7a66), [LICENSE dessa fonte](https://github.com/gitroomhq/postiz-agent/blob/0a5cd5aedaf8edd030895e23642ee51db84c7a66/LICENSE), [commit próximo da publicação](https://github.com/gitroomhq/postiz-agent/commit/885e1b04260a2746a3fe92d75e241101111a7a71).
+
+Proposta: manter lock/integrity de 2.0.16 já adotados; preservar LICENSE do pacote e apontar para tag e commit de consulta nos documentos de terceiros. Não tratar o `main` 2.0.21 como source exato do npm 2.0.16.
+
+## Caminho mínimo proposto
+
+1. Confirmar repo público e revisão pronta; manter Dockerfile/base runtime atual, persona/skill e lock. Associar a imagem ao repo correto por `org.opencontainers.image.source` no build da release.
+2. Se auth e espaço local bastarem, usar `plow-agents image build ghcr.io/puebloaguilar/posta:v1` e `image push` simples. Caso contrário, uma workflow de release amd64 com `GITHUB_TOKEN` é a alternativa de menor escopo, sem novo serviço da aplicação nem secretos Plow/Postiz no CI.
+3. Tornar o package público pela UI e verificar manifest/pull **sem credencial do criador**, usando o digest produzido. Repo público e push autenticado sozinhos não atendem à exigência Plow.
+4. Atualizar listing `posta`, conferir dados públicos/uso e preparar UID + digest + repo/commit para admissão admin. Só promover automaticamente depois da admissão inicial comprovada.
+
+Esforço: o caminho local usa ferramentas existentes; Actions adiciona uma workflow curta e um primeiro build remoto. Ambos têm uma mudança inicial de visibility na UI e uma admissão manual Plow. Não foram verificados scopes atuais do GitHub, espaço Docker, existência/visibility prévia do package, pull público da nova imagem, permissão admin Plow ou admissão de `posta`; essas checagens pertencem à execução principal. Nenhuma alteração de código foi feita nesta pesquisa.

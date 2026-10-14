@@ -2,7 +2,7 @@
 
 Entrega local: persona + skill, como escolhido pelo usuário. O fluxo padrão é
 prévia no iMessage e agendamento depois da aprovação. Este documento distingue
-imagem/CLI verificados de login, conversa e publicação ainda pendentes.
+imagem/CLI e conversa verificados de agendamento social e publicação ainda pendentes.
 
 ## Provas realizadas
 
@@ -10,6 +10,8 @@ imagem/CLI verificados de login, conversa e publicação ainda pendentes.
 | --- | --- | --- |
 | Base imutável | Registry público/`imagetools inspect` do digest no Dockerfile | Índice amd64/arm64 confirmado |
 | Imagem local | `docker build --platform linux/arm64 -t plow-postiz-hermes-agent:local .` | PASS |
+| Imagem cloud | `plow-agents image build ghcr.io/puebloaguilar/posta:v1` | PASS linux/amd64 |
+| CLI amd64 | Mesma fixture da CLI no build amd64 como UID 10000 e sem credenciais/rede externa | PASS, 9 checks |
 | CLI no container | `postiz --version` executado como UID 10000 | 2.0.16 |
 | Transporte/schema CLI | `tests/cli_contract.py` dentro da imagem, API local e chave fictícia | PASS, 9 checks |
 | Skill metadata | `quick_validate.py` com o Python da imagem | PASS |
@@ -24,7 +26,9 @@ imagem/CLI verificados de login, conversa e publicação ainda pendentes.
 | Segredos no build | Guard oficial `refuse_credentials` + busca pelo valor real da chave nos artefatos próprios | PASS; chave não encontrada |
 | Login Plow | Ativação enviada pelo Mensagens com autorização expressa do dono; CLI gravou login mode600 | PASS |
 | Deploy autenticado | `plow-agents deploy --local --line ln_p3` | PASS; container/volume próprio ativo |
-| Canal iMessage | Mensagem de teste entregue na linha +1 650 315 6536 e resposta recebida | Canal PASS; conteúdo bloqueado por HTTP 402 sem créditos Plow |
+| Canal e modelo iMessage | Pedido entregue na linha +1 650 315 6536; resposta do Hermes via Plow recebida depois da recarga | PASS: discovery real e prévia de legenda em PT-BR |
+| Aprovação na prévia real | Sessão `20261014_122100_f150de9e`, modelo `z-ai/glm-5.2`, quatro tool calls | Somente `skill_view`, `terminal`, `postiz auth:status` e `integrations:list`; zero comandos de escrita social |
+| Agent Index | Ambiente privado AGENT_ID/NAME/BLURB e reporter nativo; GET público `/v1/agent?agent_id=posta&fresh=1` | PASS HTTP 200, Posta, slug posta e blurb corretos |
 
 O teste de contrato usa o binário oficial realmente instalado. Exercita auth,
 descoberta, settings, upload multipart, preservação de JSON e `id/path`, tipos
@@ -54,7 +58,7 @@ Hermes da base respondendo a mensagens reais no iMessage.
 
 ## Recursos e ambiente
 
-Somente arm64 foi construído nesta máquina. A base precisou de download inicial;
+As variantes arm64 e amd64 foram construídas nesta máquina. A base precisou de download inicial;
 houve pressão temporária no disco e depois o espaço disponível recuperou. Não foi
 feito prune global, exclusão de imagens antigas, limpeza de volumes ou alteração
 de outros projetos. O contexto de build transferido foi de aproximadamente 38 KB;
@@ -68,18 +72,24 @@ de Git/build. Container `plow-postiz-hermes-agent-agent-1` ativo com home própr
 Configuração local self-hosted preservada em `.env` privado, sem copiar a chave
 Postiz para esse arquivo. A chave entra pelo ambiente.
 
-A primeira mensagem pediu apenas discovery das redes, sem criar/agendar. Ela foi
-recebida; o gateway tentou o modelo default da base (`z-ai/glm-5.2` via Plow), mas
-recebeu HTTP 402 e respondeu no iMessage que a conta está sem créditos. A conexão
-com o canal está comprovada; comportamento do modelo e criação de prévia real
-ainda não foram comprovados. Não repetir o pedido até resolver o saldo/provedor.
+A primeira mensagem foi bloqueada por HTTP 402. Depois de o usuário informar a
+recarga, um novo pedido pelo iMessage solicitou discovery das redes e uma prévia
+de legenda, sem agendar/publicar e com a foto ainda pendente. O modelo default
+`z-ai/glm-5.2` via Plow consultou a integração real e respondeu com legenda em
+PT-BR, conta/formato, mídia pendente e horário não definido. A resposta confirmou
+que aguardaria a foto e uma nova prévia antes de qualquer agendamento.
+
+A inspeção read-only dos tool calls dessa sessão encontrou somente leitura da
+skill, `postiz auth:status` e `postiz integrations:list`. Nenhum comando de criação,
+atualização ou exclusão social foi executado. Essa prova cobre uma prévia real sem
+aprovação; ainda não cobre upload, edição de mídia ou agendamento aprovado.
 
 O Hermes local do dono está configurado com `openai-codex`/`gpt-5.5`; a base tem
 suporte a esse provedor. Após o usuário perguntar sobre usar a conta Codex, foi
 iniciado o login nativo do Posta (`hermes auth add openai-codex --type oauth`), com
-sessão própria no volume privado. O fluxo aguarda a autorização da conta no
-navegador. Nenhuma credencial Codex do Hermes principal foi copiada ou renovada,
-nenhuma recarga feita, e o modelo não será trocado antes do login confirmado.
+sessão própria no volume privado. Com a recarga Plow, o processo de autorização
+pendente foi encerrado e o Posta continuou no provedor Plow. Nenhuma credencial
+Codex do Hermes principal foi copiada ou renovada. O login Codex não foi concluído.
 
 A fonte runtime `auth_oauth_grants.py` classifica openai-codex como refresh de uso
 único: duplicar o grant em dois arquivos pode invalidar uma das sessões quando a
@@ -95,13 +105,13 @@ pendentes do login e teste da conta. Fonte: [OpenAI models](https://learn.chatgp
 
 ## Pendências reais
 
-- Concluir autorização Codex do Posta no navegador; depois configurar o provedor
-  local e validar prévia/edição/aprovação pela conversa real.
+- Validar edição e agendamento de uma prévia com mídia/conta/horário aprovados pelo
+  dono. Codex permanece uma alternativa opcional, sem login concluído.
 - Upload e agendamento em Postiz real de conteúdo aprovado; nenhum post foi criado
   nos testes acima.
 - Provedor de imagens IA para arte nova; não foi feita geração de imagem.
 - OAuth self-hosted/device flow cloud: rota da instância escolhida precisa de prova.
-- Repo remoto, push GHCR, pull anônimo, listing Index e admissão
+- Repo remoto, push GHCR, pull anônimo e admissão
   administrativa de deploy de um clique. A imagem atual é local.
 
 As regras de aprovação são orientações de persona/skill, sem gate determinista ou
