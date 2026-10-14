@@ -29,6 +29,10 @@ imagem/CLI e conversa verificados de agendamento social e publicação ainda pen
 | Canal e modelo iMessage | Pedido entregue na linha +1 650 315 6536; resposta do Hermes via Plow recebida depois da recarga | PASS: discovery real e prévia de legenda em PT-BR |
 | Aprovação na prévia real | Sessão `20261014_122100_f150de9e`, modelo `z-ai/glm-5.2`, quatro tool calls | Somente `skill_view`, `terminal`, `postiz auth:status` e `integrations:list`; zero comandos de escrita social |
 | Agent Index | Ambiente privado AGENT_ID/NAME/BLURB e reporter nativo; GET público `/v1/agent?agent_id=posta&fresh=1` | PASS HTTP 200, Posta, slug posta e blurb corretos |
+| Collector Index | Cliente embutido `--agent posta --dry-run`, store nativa Hermes | PASS: um dia/modelo coletado, 125.987 tokens incluindo cache; não significa posição verificada no ranking |
+| Fonte pública | GitHub API confirmou repo público e branch main | PASS: https://github.com/PuebloAguilar/posta |
+| Release GHCR | Push pela CLI Plow e API GitHub com visibility public | PASS: v1, digest `4e93403e36a5db1bca1d6d3e6e904e917b49ebddb6e2262e49f1f1892c459be0` |
+| Pull anônimo | Docker com config temporária vazia, sem helper/login, endpoint local explícito e digest exato | PASS linux/amd64, exit 0 e digest correto |
 
 O teste de contrato usa o binário oficial realmente instalado. Exercita auth,
 descoberta, settings, upload multipart, preservação de JSON e `id/path`, tipos
@@ -111,8 +115,8 @@ pendentes do login e teste da conta. Fonte: [OpenAI models](https://learn.chatgp
   nos testes acima.
 - Provedor de imagens IA para arte nova; não foi feita geração de imagem.
 - OAuth self-hosted/device flow cloud: rota da instância escolhida precisa de prova.
-- Repo remoto, push GHCR, pull anônimo e admissão
-  administrativa de deploy de um clique. A imagem atual é local.
+- Primeira admissão administrativa de deploy de um clique e prova da instalação
+  cloud. Repo, listing e imagem v1 já são públicos; o pull anônimo foi confirmado.
 
 As regras de aprovação são orientações de persona/skill, sem gate determinista ou
 registro próprio, conforme o escopo escolhido. Não declarar garantia absoluta de

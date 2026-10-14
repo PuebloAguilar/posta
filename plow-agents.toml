@@ -1,2 +1,2 @@
-# Release image selected for Posta. This is a target, not a claim of publication.
+# Public amd64 release. Initial Plow admission is still pending.
 image = "ghcr.io/puebloaguilar/posta:v1"

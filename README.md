@@ -3,7 +3,7 @@
 Mande uma ideia, foto ou vídeo pelo iMessage. O agente prepara o conteúdo, mostra
 uma prévia e agenda nas suas redes pelo Postiz depois da sua aprovação.
 
-Uma imagem por pessoa, com contas e preferências próprias. Esta versão contém
+Cada pessoa tem sua própria instalação, contas e preferências. Esta versão contém
 **persona e skill**; usa as sessões do Hermes e a fila do Postiz, sem banco,
 registro de execução ou scheduler próprio.
 
@@ -124,6 +124,12 @@ Siga [docs/PUBLISH.md](docs/PUBLISH.md) para registrar no Agent Index, publicar 
 imagem e solicitar deploy de um clique à equipe Plow. Nome/slug públicos devem
 ser escolhidos antes do registro. A base já envia uso ao Index quando `AGENT_ID`
 está configurado; não precisa instalar outro reporter.
+
+Release v1: [Posta no Agent Index](https://aiworthusing.com/agent-index/posta) e
+[imagem pública no GHCR](https://github.com/users/PuebloAguilar/packages/container/package/posta).
+Imagem `linux/amd64`, com pull anônimo verificado. A primeira admissão para deploy
+de um clique ainda depende da equipe Plow; os dados e a mensagem estão em
+[docs/ADMISSION-MESSAGE.md](docs/ADMISSION-MESSAGE.md).
 
 ## Componentes e limites
 
