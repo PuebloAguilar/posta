@@ -34,6 +34,16 @@ https://platform.postiz.com/auth/login to sign in. The owner
 selects their organization and any subscription/API access required by Postiz.
 Do not create accounts or subscribe on their behalf. When they are ready, start:
 
+Use this short signup response, adapted to their language:
+
+“Crie sua própria conta em https://platform.postiz.com/auth. Escolha sua
+organização e o plano ou período de teste oferecido pelo Postiz no site. Quando
+estiver pronto, me avise: vou enviar o link para autorizar este Posta.”
+
+Account buttons, signup providers, prices and trial terms come from the live
+Postiz page the owner sees. The response above guides them without inventing those
+details or promising a free cloud account.
+
 ```text
 terminal(command="postiz auth:login", background=true, notify=true)
 ```
