@@ -22,6 +22,9 @@ imagem/CLI verificados de login, conversa e publicação ainda pendentes.
 | Revisão independente | Revisão de Docker/CLI/skill/docs e fixture repetida pelo revisor | Dois P2 de docs corrigidos; sem achados adicionais no escopo |
 | Boot sem identidade | `/init` completo, sem rede/token/API Plow, respeitando a espera de 60s da base | PASS: parked marker, supervisor vivo e gateway retido |
 | Segredos no build | Guard oficial `refuse_credentials` + busca pelo valor real da chave nos artefatos próprios | PASS; chave não encontrada |
+| Login Plow | Ativação enviada pelo Mensagens com autorização expressa do dono; CLI gravou login mode600 | PASS |
+| Deploy autenticado | `plow-agents deploy --local --line ln_p3` | PASS; container/volume próprio ativo |
+| Canal iMessage | Mensagem de teste entregue na linha +1 650 315 6536 e resposta recebida | Canal PASS; conteúdo bloqueado por HTTP 402 sem créditos Plow |
 
 O teste de contrato usa o binário oficial realmente instalado. Exercita auth,
 descoberta, settings, upload multipart, preservação de JSON e `id/path`, tipos
@@ -57,16 +60,34 @@ feito prune global, exclusão de imagens antigas, limpeza de volumes ou alteraç
 de outros projetos. O contexto de build transferido foi de aproximadamente 38 KB;
 referências e credenciais ficaram excluídas pela allowlist Docker.
 
+## Instalação local atual
+
+Nome escolhido pelo usuário: **Posta**; slug: **posta**. Linha local: `ln_p3`,
+número **+1 650 315 6536**. Conta Plow ativada; credencial de agente mode600, excluída
+de Git/build. Container `plow-postiz-hermes-agent-agent-1` ativo com home própria.
+Configuração local self-hosted preservada em `.env` privado, sem copiar a chave
+Postiz para esse arquivo. A chave entra pelo ambiente.
+
+A primeira mensagem pediu apenas discovery das redes, sem criar/agendar. Ela foi
+recebida; o gateway tentou o modelo default da base (`z-ai/glm-5.2` via Plow), mas
+recebeu HTTP 402 e respondeu no iMessage que a conta está sem créditos. A conexão
+com o canal está comprovada; comportamento do modelo e criação de prévia real
+ainda não foram comprovados. Não repetir o pedido até resolver o saldo/provedor.
+
+O Hermes local do dono está configurado com `openai-codex`/`gpt-5.5`; a base tem
+suporte a esse provedor. A escolha de usar esse login ou recarregar Plow foi
+solicitada ao usuário. Nenhuma credencial Codex foi copiada, modelo alterado ou
+recarga feita nesta etapa.
+
 ## Pendências reais
 
-- Login Plow: CLI instalado, ativação iniciada e aguardando mensagem enviada pelo
-  próprio dono. Nenhum código/token de ativação é registrado neste documento.
-- Linha livre e deploy autenticado; prévia/edição/aprovação pela conversa real.
+- Resolver inferência: conta Plow respondeu sem créditos; recarga ou escolha de
+  provedor pelo dono. Depois validar prévia/edição/aprovação pela conversa real.
 - Upload e agendamento em Postiz real de conteúdo aprovado; nenhum post foi criado
   nos testes acima.
 - Provedor de imagens IA para arte nova; não foi feita geração de imagem.
 - OAuth self-hosted/device flow cloud: rota da instância escolhida precisa de prova.
-- Nome/slug públicos, repo remoto, push GHCR, pull anônimo, listing Index e admissão
+- Repo remoto, push GHCR, pull anônimo, listing Index e admissão
   administrativa de deploy de um clique. A imagem atual é local.
 
 As regras de aprovação são orientações de persona/skill, sem gate determinista ou

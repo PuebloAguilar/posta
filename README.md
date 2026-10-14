@@ -1,4 +1,4 @@
-# Postiz pelo iMessage — agente Hermes no Plow
+# Posta — seu agente de conteúdo pelo iMessage
 
 Mande uma ideia, foto ou vídeo pelo iMessage. O agente prepara o conteúdo, mostra
 uma prévia e agenda nas suas redes pelo Postiz depois da sua aprovação.

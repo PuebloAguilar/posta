@@ -1,8 +1,8 @@
 # Publicação no Plow e Agent Index
 
 Estas etapas descrevem ações reais ainda dependentes de login, teste de conversa e
-identidade pública escolhida. Não execute registro/publicação usando os valores de
-exemplo. O nome provisório deste projeto é “Postiz pelo iMessage”.
+identidade pública escolhida. O usuário escolheu **Posta**, slug **`posta`**. Não
+execute comandos usando uma URL de repo ou tag que ainda não tenha sido publicada.
 
 ## 1. Validar a instalação
 
@@ -16,8 +16,8 @@ o ID/estado no Postiz. Testes de fixture não substituem essa prova.
 No `plow-credentials` privado, acrescente o slug escolhido e seus textos públicos:
 
 ```dotenv
-AGENT_ID=SEU_SLUG_ESCOLHIDO
-AGENT_NAME=Seu nome público de agente
+AGENT_ID=posta
+AGENT_NAME=Posta
 AGENT_BLURB=Create social content over iMessage. Preview, approve, and schedule with Postiz.
 ```
 
@@ -31,7 +31,7 @@ O reporter já embutido na base registra e envia uso a cada cinco minutos. Você
 também pode definir o listing diretamente pelo CLI, quando tiver slug e repo:
 
 ```sh
-plow-agents image set SEU_SLUG_ESCOLHIDO --name 'Seu nome público de agente' --blurb 'Create social content over iMessage. Preview, approve, and schedule with Postiz.' --repo https://github.com/SEU_USUARIO/SEU_REPO
+plow-agents image set posta --name 'Posta' --blurb 'Create social content over iMessage. Preview, approve, and schedule with Postiz.' --repo https://github.com/SEU_USUARIO/SEU_REPO
 ```
 
 Listing público e instalação na nuvem são etapas distintas. Confirme que a página
@@ -44,8 +44,8 @@ Escolha sua organização/conta GHCR e uma tag de release:
 
 ```sh
 docker login ghcr.io -u SEU_USUARIO
-plow-agents image build ghcr.io/SEU_USUARIO/SEU_AGENTE:v1
-plow-agents image push ghcr.io/SEU_USUARIO/SEU_AGENTE:v1
+plow-agents image build ghcr.io/puebloaguilar/posta:v1
+plow-agents image push ghcr.io/puebloaguilar/posta:v1
 plow-agents profile --show
 ```
 
@@ -53,7 +53,7 @@ O comando `image build` do CLI consultado constrói **linux/amd64**, compatível
 o deploy cloud. `image push` só envia a tag já construída; não faz build e não deve
 enviar uma tag antiga por engano. O CLI não produz uma imagem multiarch automaticamente. Para distribuir nas duas
 arquiteturas, use um builder apropriado e `docker buildx build --platform
-linux/amd64,linux/arm64 --push -t ghcr.io/SEU_USUARIO/SEU_AGENTE:v1 .`; faça isso
+linux/amd64,linux/arm64 --push -t ghcr.io/puebloaguilar/posta:v1 .`; faça isso
 apenas em uma máquina com capacidade suficiente.
 
 Depois do primeiro push, marque o pacote GHCR como público. Confirme pull anônimo
@@ -79,9 +79,9 @@ copiar a chave Postiz do criador para os instaladores.
 Depois da admissão administrativa:
 
 ```sh
-plow-agents image build ghcr.io/SEU_USUARIO/SEU_AGENTE:v2
-plow-agents image push ghcr.io/SEU_USUARIO/SEU_AGENTE:v2 --promote SEU_SLUG_ESCOLHIDO
-plow-agents image show SEU_SLUG_ESCOLHIDO
+plow-agents image build ghcr.io/puebloaguilar/posta:v2
+plow-agents image push ghcr.io/puebloaguilar/posta:v2 --promote posta
+plow-agents image show posta
 ```
 
 Promoção altera a imagem para novas instalações; agentes já existentes mantêm sua

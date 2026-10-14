@@ -1,6 +1,6 @@
 FROM public.ecr.aws/e1h7x4a2/plow-cloud-agents:base-c692e807386993b677de13500ce3a1a323d52b48@sha256:e04a373ed7b8a1f6440e4813eb282c2b6087d31e77c6e5e386ae40a307163d32
 
-LABEL org.opencontainers.image.title="Postiz over iMessage" \
+LABEL org.opencontainers.image.title="Posta" \
       org.opencontainers.image.description="Hermes persona and skill for previewing and scheduling approved social content on Plow" \
       co.plow.postiz.version="2.0.16"
 

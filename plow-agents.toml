@@ -1,0 +1,2 @@
+# Release image selected for Posta. This is a target, not a claim of publication.
+image = "ghcr.io/puebloaguilar/posta:v1"
