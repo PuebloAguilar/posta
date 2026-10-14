@@ -1,0 +1,9 @@
+[submodule ".references/plow-hermes-agent"]
+	path = .references/plow-hermes-agent
+	url = https://github.com/plow-pbc/plow-hermes-agent.git
+[submodule ".references/plow-agents"]
+	path = .references/plow-agents
+	url = https://github.com/plow-pbc/plow-agents.git
+[submodule ".references/postiz-agent"]
+	path = .references/postiz-agent
+	url = https://github.com/gitroomhq/postiz-agent.git

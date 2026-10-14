@@ -18,28 +18,28 @@
 
 ## Task 1: Referências e dependências
 
-- [ ] Registrar Kata e baseline da skill sem conhecimento Postiz específico.
-- [ ] Adicionar `plow-hermes-agent`, `plow-agents` e `postiz-agent` como submodules rasos. Registrar `git rev-parse HEAD` e licença em `.references/README.md`.
-- [ ] Fixar a imagem base por digest publicado, e instalar `postiz@2.0.16` em `runtime/package.json` com lock via `npm install --package-lock-only --ignore-scripts --cache /tmp/plow-postiz-npm-cache`.
+- [x] Registrar Kata e baseline da skill sem conhecimento Postiz específico.
+- [x] Adicionar `plow-hermes-agent`, `plow-agents` e `postiz-agent` como submodules rasos. Registrar `git rev-parse HEAD` e licença em `.references/README.md`.
+- [x] Fixar a imagem base por digest publicado, e instalar `postiz@2.0.16` em `runtime/package.json` com lock via `npm install --package-lock-only --ignore-scripts --cache /tmp/plow-postiz-npm-cache`.
 
 ## Task 2: Persona e skill
 
-- [ ] Criar `persona.md`: função, voz e prévia/aprovação, sem repetir regras de identidade/trust da base.
-- [ ] Criar `skills/social-publisher/SKILL.md` e `references/postiz-workflow.md`: auth, descoberta, mídia, formato, payload, approval, status e reconciliação de timeout.
-- [ ] Rodar os seis cenários baseline com a skill e comparar; corrigir lacunas confirmadas.
+- [x] Criar `persona.md`: função, voz e prévia/aprovação, sem repetir regras de identidade/trust da base.
+- [x] Criar `skills/social-publisher/SKILL.md` e `references/postiz-workflow.md`: auth, descoberta, mídia, formato, payload, approval, status e reconciliação de timeout.
+- [x] Rodar os seis cenários baseline com a skill e comparar; corrigir lacunas confirmadas.
 
 ## Task 3: Container e setup
 
-- [ ] Criar Dockerfile que copia persona, ambas seeds da skill e instala o npm lock em `/opt/postiz`; preservar `/init` da base.
-- [ ] Criar Compose com `plow-credentials`, ambiente Postiz e home persistente; credenciais OAuth sob home persistente.
-- [ ] Criar README e `docs/PUBLISH.md` com login/linha reais, Agent Index embutido, imagem pública amd64 e admissão Plow.
-- [ ] Verificar o tamanho da base antes do pull; preservar trabalho e dados existentes se faltar espaço. Não executar prune/limpeza global.
+- [x] Criar Dockerfile que copia persona, ambas seeds da skill e instala o npm lock em `/opt/postiz`; preservar `/init` da base.
+- [x] Criar Compose com `plow-credentials`, ambiente Postiz e home persistente; credenciais OAuth sob home persistente.
+- [x] Criar README e `docs/PUBLISH.md` com login/linha reais, Agent Index embutido, imagem pública amd64 e admissão Plow.
+- [x] Verificar o tamanho da base antes do pull; preservar trabalho e dados existentes se faltar espaço. Não executar prune/limpeza global.
 
 ## Task 4: Prova e revisão
 
-- [ ] Executar verificação da skill/frontmatter e `docker compose config --quiet` com credencial fictícia fora do checkout.
-- [ ] Construir a imagem se couber no disco e executar `postiz --version`, `--help`, discovery e paths de persona/skill com entrypoint de inspeção.
-- [ ] Exercitar os payloads da documentação com o CLI real contra HTTP local simulado. Confirmar draft/schedule/now, upload→URL e endpoint `/api/public/v1` sem escrita externa.
-- [ ] Fazer discovery read-only do Postiz real com saída sanitizada, sem copiar segredo para artefatos.
-- [ ] Revisar diff e arquivos de build por referência/segredos; revisão independente; registrar limites em `docs/VERIFICATION.md` e Kata.
-- [ ] Commit local da entrega verificada; não presumir login Plow, publicação do Index, imagem pública ou teste iMessage.
+- [x] Executar verificação da skill/frontmatter e `docker compose config --quiet` com credencial fictícia fora do checkout.
+- [x] Construir a imagem se couber no disco e executar `postiz --version`, `--help`, discovery e paths de persona/skill com entrypoint de inspeção.
+- [x] Exercitar os payloads da documentação com o CLI real contra HTTP local simulado. Confirmar draft/schedule/now, upload→URL e endpoint `/api/public/v1` sem escrita externa.
+- [x] Fazer discovery read-only do Postiz real com saída sanitizada, sem copiar segredo para artefatos.
+- [x] Revisar diff e arquivos de build por referência/segredos; revisão independente; registrar limites em `docs/VERIFICATION.md` e Kata.
+- [x] Commit local da entrega verificada; não presumir login Plow, publicação do Index, imagem pública ou teste iMessage.

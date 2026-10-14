@@ -1,0 +1,16 @@
+services:
+  agent:
+    build: .
+    image: plow-postiz-hermes-agent:local
+    env_file: ${PLOW_CREDENTIALS:-./plow-credentials}
+    environment:
+      POSTIZ_API_URL: ${POSTIZ_API_URL:-}
+      POSTIZ_API_KEY: ${POSTIZ_API_KEY:-}
+      POSTIZ_AUTH_SERVER: ${POSTIZ_AUTH_SERVER:-https://cli-auth.postiz.com}
+      TZ: ${AGENT_TIMEZONE:-America/Sao_Paulo}
+    volumes:
+      - agent-home:/var/lib/hermes
+    stop_grace_period: 35s
+
+volumes:
+  agent-home:

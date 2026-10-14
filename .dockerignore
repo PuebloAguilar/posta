@@ -1,0 +1,10 @@
+**
+!Dockerfile
+!persona.md
+!skills/
+!skills/**
+!runtime/
+!runtime/package.json
+!runtime/package-lock.json
+!licenses/
+!licenses/**

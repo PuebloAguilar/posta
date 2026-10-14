@@ -1,0 +1,9 @@
+{
+  "name": "plow-postiz-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pinned official Postiz CLI for a Plow Hermes variant",
+  "dependencies": {
+    "postiz": "2.0.16"
+  }
+}

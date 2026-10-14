@@ -1,0 +1,108 @@
+# Hermes + Plow + Postiz via iMessage — pesquisa de fontes primárias
+
+Consulta: 2026-10-14. Escopo: leitura de documentação, código e metadados públicos. Não houve implementação, deploy, registro de listing, publicação social, uso de credenciais do usuário ou exame de conteúdo pessoal. Cópias temporárias das fontes e evidências de registry: `/tmp/plow-postiz-public-sources-20261014/`.
+
+## Resultado recomendado — proposta
+
+Criar uma variante da imagem **Plow Hermes**, com persona própria e skill de conteúdo, usando o **CLI oficial Postiz** para integrações, upload, rascunho, agendamento, publicação e conferência. Não há necessidade demonstrada de um novo cliente HTTP, bridge de iMessage ou reporter do Agent Index. Para criar imagens/vídeos por IA, avaliar o **MCP oficial Postiz**, que já expõe geração; a disponibilidade real depende da configuração e do plano da instância. Fontes que fundamentam a proposta: [contrato da variante](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/README.md#building-a-variant-image), [CLI oficial](https://github.com/gitroomhq/postiz-agent), [MCP oficial](https://docs.postiz.com/mcp/introduction).
+
+Separar dois resultados: um agente local do proprietário conectado à sua instância existente; uma imagem pública reutilizável, que cada instalador conecta à **própria** organização Postiz. A imagem comum nunca inclui credenciais, IDs de integração ou dados do criador. Isso é proposta de produto; o contrato da base já determina que a imagem seja livre de identidade e credenciais de tenant. [Base Plow](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/Dockerfile), [compose e volume individual](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/compose.yml).
+
+## Repositórios, licenças e manutenção — fatos
+
+SHAs do HEAD padrão obtidos pela API pública GitHub; nenhum dos seis estava arquivado. `pushed_at` demonstra atividade, não estabilidade, SLA ou auditoria.
+
+| Fonte | SHA consultado | Licença do arquivo | Atividade pública mais recente |
+|---|---|---|---|
+| [plow-hermes-agent](https://github.com/plow-pbc/plow-hermes-agent/commit/c692e807386993b677de13500ce3a1a323d52b48) | `c692e807386993b677de13500ce3a1a323d52b48` | Apache-2.0 | 2026-10-12 |
+| [plow-agents](https://github.com/plow-pbc/plow-agents/commit/53dd92242e88f6e877cc09dbfb08b31b0e3925cb) | `53dd92242e88f6e877cc09dbfb08b31b0e3925cb` | Apache-2.0 | 2026-09-30 |
+| [hermes-plugin-plow](https://github.com/plow-pbc/hermes-plugin-plow/commit/f42e6e34b82a627ee0089eb2c41bbf5708f14899) | `f42e6e34b82a627ee0089eb2c41bbf5708f14899` | Apache-2.0 | 2026-10-13 |
+| [agent-index-client](https://github.com/plow-pbc/agent-index-client/commit/60fadbb2009a73886b6220403e74905405b6116d) | `60fadbb2009a73886b6220403e74905405b6116d` | Apache-2.0 | 2026-10-05 |
+| [postiz-agent](https://github.com/gitroomhq/postiz-agent/commit/de2032e46d329c4e01714a65a57da28cd419a5b2) | `de2032e46d329c4e01714a65a57da28cd419a5b2` | AGPL-3.0 | 2026-10-14 |
+| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent/commit/0e427d788d253630d38a3a51cd76849e73cd6925) | `0e427d788d253630d38a3a51cd76849e73cd6925` | MIT | 2026-10-14 |
+
+Fontes das licenças: [Plow base LICENSE](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/LICENSE), [CLI Plow LICENSE](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/LICENSE), [plugin LICENSE](https://github.com/plow-pbc/hermes-plugin-plow/blob/f42e6e34b82a627ee0089eb2c41bbf5708f14899/LICENSE), [Index LICENSE](https://github.com/plow-pbc/agent-index-client/blob/60fadbb2009a73886b6220403e74905405b6116d/LICENSE), [Postiz LICENSE](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/LICENSE), [Hermes LICENSE](https://github.com/NousResearch/hermes-agent/blob/0e427d788d253630d38a3a51cd76849e73cd6925/LICENSE). O GitHub classifica Postiz como `NOASSERTION`, mas o arquivo e `package.json` dizem AGPL-3.0; registrar o texto real, não inferir licença permissiva pelo badge ausente.
+
+### Drift relevante do pacote Postiz
+
+O `package.json` de `main` diz **2.0.21**, porém o registry consultado retornou **2.0.16** como `latest`; `GET /postiz/2.0.21` respondeu 404. Portanto não especificar `npm install postiz@2.0.21` como instalável. A máquina do usuário contém 2.0.14, conforme descoberta do agente principal; esse fato local não foi reavaliado nesta pesquisa. [package.json main](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/package.json), [registry latest](https://registry.npmjs.org/postiz/latest), [metadados 2.0.16](https://registry.npmjs.org/postiz/2.0.16).
+
+Foi baixado e lido o `dist/index.js` de 2.0.16, sem instalar ou executar operações autenticadas. Esse pacote contém upload, listagem, criação JSON, alteração draft/schedule e auth device flow. Requer Node >=18. Os recursos de documentação em `main` podem ser mais novos que a versão distribuída. [Tarball oficial 2.0.16](https://registry.npmjs.org/postiz/-/postiz-2.0.16.tgz).
+
+## Base imutável, paths e build — fatos
+
+O registry público serviu um índice com `linux/amd64` e `linux/arm64` para o HEAD da base. O digest foi calculado sobre os bytes recebidos e uma segunda leitura pelo digest retornou exatamente os mesmos bytes:
+
+```text
+public.ecr.aws/e1h7x4a2/plow-cloud-agents:base-c692e807386993b677de13500ce3a1a323d52b48@sha256:e04a373ed7b8a1f6440e4813eb282c2b6087d31e77c6e5e386ae40a307163d32
+```
+
+Evidência: [registry público](https://gallery.ecr.aws/e1h7x4a2/plow-cloud-agents), [manifest do tag](https://public.ecr.aws/v2/e1h7x4a2/plow-cloud-agents/manifests/base-c692e807386993b677de13500ce3a1a323d52b48), e arquivo temporário `base-c692e807386993b677de13500ce3a1a323d52b48-registry-evidence.json`. Não foi feito pull/boot dessa imagem.
+
+Inspeção adicional de tamanho, sem pull: 56 layers em cada arquitetura. Arm64 soma **939.160.696 bytes comprimidos (0,875 GiB)**; amd64 soma **955.356.529 bytes (0,890 GiB)**. Leituras HTTP Range dos últimos quatro bytes de cada gzip dão soma dos tars descomprimidos de aproximadamente **2,547 GiB arm64** e **2,575 GiB amd64**; os três layers vazios de 32 bytes foram lidos integralmente e descomprimidos. Para arm64, comprimido + tar somam ~3,42 GiB antes de cache/metadados/variante. Isso é estimativa: gzip ISIZE é módulo 2^32 por layer e soma de tars não é footprint final Docker; o maior layer medido ficou abaixo de 1 GiB. Com 6,3 GiB livres no host, informados pelo agente principal, verificar também espaço dentro do disco Docker e preferir build local de uma só arquitetura. Evidências temporárias: `base-c692e807-arm64-size.json`, `base-c692e807-arm64-gzip-size.json` e equivalentes amd64; fonte [registry ECR](https://gallery.ecr.aws/e1h7x4a2/plow-cloud-agents).
+
+Um exemplo oficial de variante também fixa tag + digest: `base-7422f99a12b15489408cacfbf884d745d4eccab5@sha256:efe3b0fdf97601c8a1b14b3faf31d0c919116c40687c5252cf501e5f6ff19898`; também confirmado como amd64/arm64. [Dockerfile life-assistant](https://github.com/plow-pbc/life-assistant-hermes-agent/blob/main/Dockerfile).
+
+Os destinos próprios da variante são `persona.md → /opt/hermes/plow-seed/persona.md` e skills em `/opt/hermes/skills/`, com a cópia do home conforme o exemplo da base. `HERMES_HOME=/var/lib/hermes`; `SOUL.md` é composto no boot e não deve ser substituído por COPY dentro do home. O plugin `plow_chat` está em `/opt/hermes/plugins/plow_chat`. Não sobrescrever o CMD `/init` nem iniciar gateway próprio. [Dockerfile da base](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/Dockerfile), [contrato da variante](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/README.md#building-a-variant-image).
+
+A base consultada **não** inclui os HEADs mais novos automaticamente: fixa plugin em `7a5270e3fa07ba7938a16342d232129b1942c334` e Hermes upstream por digest `66300578dbad1937e71288e26116219e7702da07fe5218afdf87423fa51fa0b8`. Assim, referência de consulta atual e versão embarcada são fatos diferentes. [Dockerfile base](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/Dockerfile).
+
+`plow-agents image build` força `linux/amd64` no código público; não promete multiarch. Para distribuir a variante nas duas arquiteturas, proposta: `docker buildx build --platform linux/amd64,linux/arm64 --push ...`, preservando o índice combinado. A imagem precisa ser pullable publicamente; GHCR exige marcar o pacote público depois do primeiro push. [build no CLI](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/bin/plow-agents#L561), [publicação GHCR](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/README.md#4-push-the-image).
+
+## Publicação no Agent Index e 1-click — fatos
+
+A base já tem reporter supervisionado: `AGENT_ID` habilita registro e envio a cada cinco minutos; `AGENT_NAME`/`AGENT_BLURB` personalizam o listing. Não instalar outro loop. O cliente publica contagens de tokens por dia/modelo; stories e demais campos públicos são enviados quando explicitamente fornecidos. [Serviço embutido](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/image/s6-overlay/s6-rc.d/agent-index/run), [cliente Index](https://github.com/plow-pbc/agent-index-client/blob/60fadbb2009a73886b6220403e74905405b6116d/README.md).
+
+Listing no Index, push e admissão no catálogo são etapas separadas. O CLI permite `image set SLUG --name ... --blurb ... --repo ...`; `profile --show` informa o UID. A primeira admissão exige um admin Plow, listing prévio e atribuição explícita do owner. Depois o proprietário pode usar `image push ... --promote SLUG`. A promoção afeta agentes novos; agentes existentes mantêm sua imagem. O envio de UID/slug/digest ao Discord é a coordenação descrita pelo usuário, e não deve ser enviado automaticamente sem instrução explícita de mensagem. [Registro/admissão/promoção](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/README.md#register-admit-then-promote-an-agent-image).
+
+## CLI, API e MCP Postiz — comparação factual
+
+| Caminho existente | Cobertura útil | Limitação relevante |
+|---|---|---|
+| CLI npm `postiz` | Upload, integrações/schema, posts JSON, listagem, auth, draft/schedule | Não traz geração de imagem própria; saída de vários comandos tem texto antes do JSON |
+| Public API | Contrato direto dos endpoints e payloads; base customizável | Cliente próprio duplicaria a camada já mantida pelo CLI |
+| MCP oficial | Schema de provedores, agendamento/now/draft, lista, geração de imagem/vídeo | Precisa conexão MCP autenticada e capacidades reais da instância; upload de arquivo local continua usando CLI no workflow oficial |
+
+Fontes: [README CLI](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/README.md), [API implementada pelo CLI](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/src/api.ts), [MCP tools](https://docs.postiz.com/mcp/tools). Proposta: reutilizar o CLI como transporte principal; se precisar controle determinístico, um wrapper pequeno chama o binário e valida entradas/retornos sem reimplementar endpoints.
+
+Base do CLI cloud: `https://api.postiz.com`. Ele acrescenta `/public/v1/...`. Self-hosted usa `NEXT_PUBLIC_BACKEND_URL`; no Docker oficial, exemplo `http://localhost:4007/api`. Assim, uma instância exposta sob `/api` requer `POSTIZ_API_URL=https://HOST/api`, não URL que já termine em `/public/v1`. API usa `Authorization: CHAVE` sem acrescentar Bearer; MCP usa Bearer no endpoint `/mcp`. [Snippet oficial de bases](https://github.com/gitroomhq/postiz-docs/blob/d0a587d832816e207f1324ed1ac41c2781946c45/snippets/base-url.mdx), [código CLI](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/src/api.ts), [MCP setup](https://docs.postiz.com/mcp/setup). O prefixo externo do MCP depende do reverse proxy: no Docker que encaminha `/api/` ao backend, é necessário considerar `/api/mcp`; não supor `/mcp` no host sem conferência.
+
+## Payloads, mídia, fuso e prova de publicação — fatos
+
+`draft` grava sem publicar; `schedule` usa a data; `now` ignora a data para execução imediata. Ainda fornecer `date` ISO válida: o DTO atual a exige inclusive para `now`/draft. `posts:create -t` permite só schedule/draft, mas **`posts:create --json arquivo.json` passa o objeto JSON diretamente**, incluindo `type: now`; isto foi confirmado no pacote npm 2.0.16. Não é necessário cliente próprio para contornar o enum de `-t`. [Create Post](https://docs.postiz.com/public-api/posts/create), [DTO](https://github.com/gitroomhq/postiz-app/blob/25916f12743ea7cc27ebe025f361448f9acfc258/libraries/nestjs-libraries/src/dtos/posts/create.post.dto.ts), [tarball CLI](https://registry.npmjs.org/postiz/-/postiz-2.0.16.tgz).
+
+Upload primeiro com `postiz upload`; usar o `id`/`path` retornado em `value[].image`. O CLI simples gera IDs aleatórios para `-m`; proposta: preferir JSON preservando o objeto real do upload. Para criação, settings inclui o provider correto e campos de seu schema; o CLI simples pode delegar `__type` ao backend, mas o JSON explícito é mais verificável. [Upload implementado](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/src/commands/upload.ts), [posts CLI](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/src/commands/posts.ts).
+
+Instagram standalone exige conta profissional, aceita `__type: instagram-standalone`, settings `post_type: post|story`, mídia e legenda até 2200 caracteres. O schema/Rules consultado orienta apenas um attachment em Story; docs anunciam Stories com imagem ou vídeo. Não transformar `post_type` em `reel`: vídeo/Reel usa o fluxo de post. Audio API de Reels está ausente em standalone e depende de Facebook Login. Não prometer stickers interativos de Story. [Provider standalone](https://github.com/gitroomhq/postiz-app/blob/25916f12743ea7cc27ebe025f361448f9acfc258/libraries/nestjs-libraries/src/integrations/social/instagram.standalone.provider.ts), [settings](https://docs.postiz.com/public-api/providers/instagram-standalone), [conexão e capacidades Instagram](https://docs.postiz.com/self-host/providers/instagram).
+
+API/MCP recebem datas UTC ISO 8601. Proposta: onboarding coleta fuso IANA; confirmar horário local + equivalente UTC antes de agendar, evitando depender do timezone do container. A base Plow tem default Pacific quando `TZ` não existe; isso não deve virar o fuso do usuário. [MCP schedule schema](https://docs.postiz.com/mcp/tools#scheduleposttool), [list dates UTC](https://docs.postiz.com/public-api/posts/list), [regra TZ da base](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/README.md#building-a-variant-image).
+
+HTTP 200 / `postId` confirma criação, não publicação social. O repositório cria `DRAFT` para draft e `QUEUE` para schedule/now; `PUBLISHED` ocorre posteriormente no processamento. Proposta: responder “agendado” ao QUEUE, “publicado” somente após estado PUBLISHED e URL de release, e reportar ERROR. Não repetir POST cegamente quando a resposta se perde: isso pode duplicar conteúdo; conferir por IDs persistidos/intervalo antes de retry. [Estado atribuído no banco](https://github.com/gitroomhq/postiz-app/blob/25916f12743ea7cc27ebe025f361448f9acfc258/libraries/nestjs-libraries/src/database/prisma/posts/posts.repository.ts#L650), [resposta/estado na API](https://docs.postiz.com/public-api/posts/list).
+
+## Credenciais individuais no 1-click cloud — fatos e lacunas
+
+O CLI Plow público não oferece `deploy --env`, campo de secrets ou injeção Postiz. Deploy cloud envia name, line_uid e provider; local Compose lê `plow-credentials`. O host cloud injeta identidade Plow e relay, não uma chave Postiz documentada. Portanto um `.env` local do criador não é solução comprovada para instaladores 1-click. [deploy código](https://github.com/plow-pbc/plow-agents/blob/53dd92242e88f6e877cc09dbfb08b31b0e3925cb/bin/plow-agents#L683), [contrato env da base](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/README.md#the-environment-and-the-bearer).
+
+O caminho reutilizável pronto mais claro é **Postiz CLI device flow**: o agente inicia `postiz auth:login`, entrega só URL de verificação + código curto no iMessage, o dono autoriza no browser, e o CLI grava `~/.postiz/credentials.json` 0600 em diretório 0700. O token nunca precisa ser pedido no chat. Garantir que o HOME real do usuário `hermes` seja persistido — `HERMES_HOME` não prova, por si, que `os.homedir()` do Node aponta para `/var/lib/hermes`. O primeiro setup tem interação web de autorização; o uso posterior pode ser inteiramente por iMessage. [Auth CLI](https://docs.postiz.com/cli/authentication), [gravação de credenciais](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/src/commands/auth.ts).
+
+Credenciais OAuth salvas têm precedência sobre `POSTIZ_API_KEY`/URL de ambiente; não misturar um arquivo OAuth cloud já existente com configuração self-hosted. [getConfig](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/src/config.ts).
+
+Há uma lacuna importante de self-hosted: as docs dizem que o servidor hosted de device flow também funciona com self-hosted, mas o código público do auth server usa URLs fixadas por `POSTIZ_FRONTEND_URL` e `POSTIZ_API_URL` e o início `/device/code` não recebe endereço da instância. Não foi comprovado como `cli-auth.postiz.com` seleciona uma instalação arbitrária. Caminho verificável existente: auth server oficial configurado para a instância, selecionado por `POSTIZ_AUTH_SERVER`, ou chave individual provisionada fora do chat. Não implementar OAuth novo antes de validar o existente. [Servidor oficial](https://github.com/gitroomhq/postiz-agent/blob/de2032e46d329c4e01714a65a57da28cd419a5b2/server/index.ts), [guia self-host auth](https://docs.postiz.com/self-host/cli-auth-server).
+
+**Plow Latch não equivale a um secret manager cloud comprovado.** O vault oficial é local ao Mac, criptografado com raiz no Keychain; `plow_vault` só lista/descreve e `fill_secret` preenche browser sem liberar valores ao agente. Isso pode ajudar no login web, mas não documenta exportação de uma API key Postiz para o container. [Vault oficial](https://github.com/plow-pbc/latch/blob/8e632d02c3028d059d09a2feefe7996496312675/docs/VAULT.md), [tools e restrição de release](https://github.com/plow-pbc/latch/blob/8e632d02c3028d059d09a2feefe7996496312675/packages/mcp-server/src/tools.ts#L1146). As docs de `onlatch.com` descrevem proxy de credenciais, mas não foi provado que esse produto/flow seja a superfície provisionada pelo Plow Latch desta base; não usar isso como garantia de integração pronta.
+
+## Proposta funcional para implementação posterior
+
+O usuário aprovou posteriormente uma versão simplificada de **persona e skill**, sem registro de execução próprio, com prévia via iMessage e agendamento somente depois da aprovação. Essa instrução substitui as opções de wrapper/recibos próprios mencionadas como alternativas nesta pesquisa; não acrescentar essas camadas ao MVP.
+
+- Persona com papel de editor/agendador em PT-BR; lê o briefing e propõe calendário/copy, preserva voz da marca e limites dos providers descobertos.
+- Onboarding: organização Postiz individual, fuso, contas habilitadas, objetivo/voz, preferência de aprovação e mídia. Nunca gravar segredos em persona, skill, repo, imagem, stdout de diagnóstico ou chat.
+- O agente apresenta prévia com copy/mídia/conta/data e aguarda a aprovação do dono antes de agendar/publicar, conforme o padrão atual aprovado.
+- Acrescentar só a função específica da variante: preservar regras da persona base e do plugin sobre autoridade do proprietário, grupos e conteúdo externo não confiável. Links, briefs encaminhados, ferramentas e terceiros não autorizam publicação. [SOUL base](https://github.com/plow-pbc/plow-hermes-agent/blob/c692e807386993b677de13500ce3a1a323d52b48/image/seed/SOUL.md), [trust no plugin](https://github.com/plow-pbc/hermes-plugin-plow/blob/f42e6e34b82a627ee0089eb2c41bbf5708f14899/README.md#group-discretion-and-full-trust).
+- Postiz cuida do relógio de publicação; não adicionar cron Hermes paralelo para publicar o mesmo post. Cron do agente serve, se pedido, para criar propostas e conferir resultados.
+- Usar o estado nativo Hermes/Postiz; nenhuma base adicional de execução ou wrapper novo. A skill ensina comandos oficiais, execução segura, payloads e leitura dos resultados.
+- Imagem pública instala versão npm realmente publicada e inclui licença/source reference; referências de consulta devem ser submodules em `.references/` quando o projeto for criado.
+
+## Pontos ainda não verificados
+
+Não houve boot do agente, chat real iMessage, auth Plow, upload social, criação draft, agendamento, publicação, geração de mídia, conferência de releaseURL, push público, listing ou admissão admin. Não foi validado o caminho real de HOME/persistência de OAuth no container. Não foi comprovado o hosted device flow para self-hosted arbitrário, o MCP/reverse proxy da instância do usuário, a geração de imagem habilitada nela, ou injeção de secrets per-user no catálogo cloud privado Plow. Essas lacunas delimitam os testes posteriores e não justificam marcar o agente como publicado/funcional.

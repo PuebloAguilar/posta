@@ -1,1 +1,9 @@
 .kata.local.toml
+node_modules/
+plow-credentials
+plow-credentials.*
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
