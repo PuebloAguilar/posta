@@ -75,14 +75,23 @@ com o canal está comprovada; comportamento do modelo e criação de prévia rea
 ainda não foram comprovados. Não repetir o pedido até resolver o saldo/provedor.
 
 O Hermes local do dono está configurado com `openai-codex`/`gpt-5.5`; a base tem
-suporte a esse provedor. A escolha de usar esse login ou recarregar Plow foi
-solicitada ao usuário. Nenhuma credencial Codex foi copiada, modelo alterado ou
-recarga feita nesta etapa.
+suporte a esse provedor. Após o usuário perguntar sobre usar a conta Codex, foi
+iniciado o login nativo do Posta (`hermes auth add openai-codex --type oauth`), com
+sessão própria no volume privado. O fluxo aguarda a autorização da conta no
+navegador. Nenhuma credencial Codex do Hermes principal foi copiada ou renovada,
+nenhuma recarga feita, e o modelo não será trocado antes do login confirmado.
+
+A fonte runtime `auth_oauth_grants.py` classifica openai-codex como refresh de uso
+único: duplicar o grant em dois arquivos pode invalidar uma das sessões quando a
+outra renova. Por isso a instalação usa a mesma conta com um grant independente.
+Compose validou os knobs nativos `HERMES_PROVIDER` e `HERMES_MODEL`; o código de
+boot/gateway da base permanece intacto. A tela oficial de autorização foi aberta
+no Chrome, mas leitura da URL via Apple Events não estava disponível nesta sessão.
 
 ## Pendências reais
 
-- Resolver inferência: conta Plow respondeu sem créditos; recarga ou escolha de
-  provedor pelo dono. Depois validar prévia/edição/aprovação pela conversa real.
+- Concluir autorização Codex do Posta no navegador; depois configurar o provedor
+  local e validar prévia/edição/aprovação pela conversa real.
 - Upload e agendamento em Postiz real de conteúdo aprovado; nenhum post foi criado
   nos testes acima.
 - Provedor de imagens IA para arte nova; não foi feita geração de imagem.

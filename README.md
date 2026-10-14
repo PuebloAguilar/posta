@@ -67,6 +67,35 @@ Não envie chaves pelo iMessage. O agente roda `auth:status` sem devolver sua sa
 bruta ao chat. Uma credencial OAuth salva tem precedência sobre ambiente: confira
 que ela pertence ao host/organização desejados antes de trocar a configuração.
 
+## Usar sua conta Codex para o modelo
+
+O canal iMessage continua no Plow. O Hermes da base pode usar `openai-codex` como
+provedor de inferência, com um login próprio do Posta na mesma conta ChatGPT/Codex.
+Esse uso fica sujeito aos limites da conta. A sessão deve ser independente: os
+tokens de renovação Codex são de uso único e copiar a sessão do Hermes principal
+pode deixar uma das instalações sem acesso após a renovação.
+
+Com o container ativo, inicie a autorização nativa:
+
+```sh
+docker compose exec -T --user 10000:10000 agent hermes auth add openai-codex --type oauth --label posta --no-browser
+```
+
+Abra o endereço exibido, use sua conta e autorize o código. O login fica no volume
+privado do agente. Não copie `auth.json` para o repositório ou para a imagem. Após
+confirmar o login, defina em `.env`:
+
+```dotenv
+HERMES_PROVIDER=openai-codex
+HERMES_MODEL=gpt-5.5
+```
+
+Recrie o container com `docker compose up -d`. A base configura o provedor e remove
+a rota de inferência Plow; não é necessário alterar seu gateway. Para voltar ao
+modelo Plow, use `HERMES_PROVIDER=plow`, remova `HERMES_MODEL` e recrie.
+
+Fonte de autenticação: [OpenAI — login por código em dispositivos sem navegador](https://learn.chatgpt.com/docs/auth#login-on-headless-devices).
+
 ## Construir e verificar sem Plow
 
 ```sh

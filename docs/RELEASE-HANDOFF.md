@@ -8,7 +8,7 @@ Atualizado em 2026-10-14. Nome/slug escolhidos pelo usuário: **Posta / posta**.
 | Linha Plow | `ln_p3`, +1 650 315 6536 |
 | Execução | Docker Compose local, container próprio ativo |
 | Postiz | Instância self-hosted do dono autenticada; Instagram standalone ativo |
-| Modelo atual | Base Plow default; teste recebeu HTTP 402 por falta de créditos |
+| Modelo atual | Base Plow default (HTTP 402); login Codex próprio iniciado, aguardando autorização |
 | Preview/aprovação | Persona/skill pronta; aguarda inferência funcional para prova iMessage |
 | UID do builder | `819e6514-a7f5-4437-820f-62a3238d7c1d` |
 | Slug do Agent Index | `posta`, consulta pública retornou inexistente antes do registro |
@@ -22,6 +22,6 @@ Não há código/token de ativação, chave Postiz ou credencial de modelo neste
 Os dados públicos de identidade acima servem à coordenação da publicação. A
 mensagem ao Discord só deve ser enviada quando houver instrução explícita.
 
-Próximo passo: resolver saldo/modelo, testar a prévia real, construir a release
+Próximo passo: concluir a autorização Codex própria, testar a prévia real, construir a release
 amd64 em ambiente com espaço, enviar/publicar a imagem, registrar o Index e
 entregar UID/slug/digest ao administrador conforme [PUBLISH.md](PUBLISH.md).

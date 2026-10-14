@@ -7,6 +7,8 @@ services:
       POSTIZ_API_URL: ${POSTIZ_API_URL:-}
       POSTIZ_API_KEY: ${POSTIZ_API_KEY:-}
       POSTIZ_AUTH_SERVER: ${POSTIZ_AUTH_SERVER:-https://cli-auth.postiz.com}
+      HERMES_PROVIDER: ${HERMES_PROVIDER:-plow}
+      HERMES_MODEL: ${HERMES_MODEL:-}
       TZ: ${AGENT_TIMEZONE:-America/Sao_Paulo}
     volumes:
       - agent-home:/var/lib/hermes
