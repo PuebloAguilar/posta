@@ -1,0 +1,2 @@
+# Preserve upstream license/notice text exactly, including its original EOF spacing.
+licenses/* -whitespace
