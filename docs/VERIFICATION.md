@@ -88,6 +88,11 @@ Compose validou os knobs nativos `HERMES_PROVIDER` e `HERMES_MODEL`; o código d
 boot/gateway da base permanece intacto. A tela oficial de autorização foi aberta
 no Chrome, mas leitura da URL via Apple Events não estava disponível nesta sessão.
 
+A documentação oficial consultada nesta continuação indica a retirada de GPT-5.5
+do Codex em 2026-10-14; o modelo encontrado na configuração do Hermes principal não
+foi alterado. Os exemplos do Posta usam `gpt-6.1-sol`, com disponibilidade/inferência
+pendentes do login e teste da conta. Fonte: [OpenAI models](https://learn.chatgpt.com/docs/models#gpt-61-sol).
+
 ## Pendências reais
 
 - Concluir autorização Codex do Posta no navegador; depois configurar o provedor

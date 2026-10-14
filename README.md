@@ -87,14 +87,19 @@ confirmar o login, defina em `.env`:
 
 ```dotenv
 HERMES_PROVIDER=openai-codex
-HERMES_MODEL=gpt-5.5
+HERMES_MODEL=gpt-6.1-sol
 ```
 
 Recrie o container com `docker compose up -d`. A base configura o provedor e remove
 a rota de inferência Plow; não é necessário alterar seu gateway. Para voltar ao
 modelo Plow, use `HERMES_PROVIDER=plow`, remova `HERMES_MODEL` e recrie.
 
-Fonte de autenticação: [OpenAI — login por código em dispositivos sem navegador](https://learn.chatgpt.com/docs/auth#login-on-headless-devices).
+Use um modelo disponível na sua conta. A documentação OpenAI em 2026-10-14 indica
+`gpt-6.1-sol` para o lançamento atual e a retirada de GPT-5.5 do Codex nessa data;
+a disponibilidade do alvo deve ser confirmada após autenticar o agente.
+
+Fontes: [OpenAI — login por código](https://learn.chatgpt.com/docs/auth#login-on-headless-devices)
+e [GPT-6.1 Sol](https://learn.chatgpt.com/docs/models#gpt-61-sol).
 
 ## Construir e verificar sem Plow
 
